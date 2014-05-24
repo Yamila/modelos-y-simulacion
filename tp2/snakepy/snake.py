@@ -40,7 +40,7 @@ def snake():
 	while  gusano.tam <= tam:
 		gusano.add()
 		dibujar(gusano.cuerpo[gusano.cabeza],verde_snake)
-	sincronizar = 600000 	
+	sincronizar = 100
 	comida = Comida(ancho,alto,radio)
 	comida.add()
 	dibujar(comida.posicion,naranja)
@@ -69,12 +69,9 @@ def snake():
 				gusano.direccion = 180
 		#Para Sincronizar
 		if teclado[K_a]:
-			sincronizar = sincronizar + 100000
+			sincronizar = sincronizar + 10
 		if teclado[K_b]:
-			sincronizar = sincronizar - 100000
-		
-		for i in range(1, sincronizar):
-			a = 1	
+			sincronizar = sincronizar - 10
 		borrar(gusano.cuerpo[gusano.cola])
 		gusano.avanzar()
 		dibujar(gusano.cuerpo[gusano.cabeza],verde_snake)
@@ -85,6 +82,7 @@ def snake():
 			dibujar(gusano.cuerpo[gusano.cabeza],verde_snake)
 			comida.add()
 			dibujar(comida.posicion,naranja)
+		pygame.time.delay(sincronizar)
 		pygame.display.flip()
 		pygame.display.update()
 
