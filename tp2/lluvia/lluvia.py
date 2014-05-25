@@ -65,10 +65,6 @@ def salir():
 	pygame.quit()
 	sys.exit()
 
-def instrucciones():
-	print('[K_UP] : Mover arriba \n [K_DOWN] : Mover abajo \n [K_LEFT] : Mover izquierda \n [K_RIGHT] : Mover Derecha \n [K_ESCAPE] : Volver al Menu')	
-	return True
-
 #PRINCIPAl
 if __name__ == '__main__':
 	opciones = [
