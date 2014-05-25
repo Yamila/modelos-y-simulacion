@@ -65,6 +65,7 @@ def salir():
 	pygame.quit()
 	sys.exit()
 
+
 #PRINCIPAl
 if __name__ == '__main__':
 	opciones = [
@@ -87,4 +88,3 @@ if __name__ == '__main__':
 		menu.actualizar()
 		pygame.display.flip()
 		pygame.time.delay(20)
-
