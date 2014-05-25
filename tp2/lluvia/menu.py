@@ -42,10 +42,10 @@ class Menu:
 		y = self.alto/4
 		for (titulo,funcion) in self.opciones:
 			if indice == self.seleccionado:
-				color = verde
+				color = azul_seleccionado
 				self.font = pygame.font.Font(None, 33)
 			else: 
-				color = verde_oscuro
+				color = azul
 				self.font = pygame.font.Font(None, 30)
 			text = self.font.render(titulo, 1, color)
 			posicion = (x, y + altura_de_opcion * indice)

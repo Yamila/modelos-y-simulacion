@@ -10,6 +10,7 @@ from menu import *
 grosor = 1
 ancho = 400
 alto = 400
+#tamanio de la gota
 tam = 10
 def lluvia():
 	
@@ -49,7 +50,6 @@ def lluvia():
 		if creador == 3:	
 			gotas.append(Gota(ancho,alto,tam))
 			creador = 0
-		#dibujar(gotas[i].centro,blanco,gotas[i].onda[gotas[i].final])
 		for i in gotas:
 			i.avanzar()
 			dibujar(i.centro,blanco,i.onda[i.final])
@@ -57,9 +57,6 @@ def lluvia():
 			if i.muerta is True:
 				gotas.remove(i)
 		creador += 1
-		#gota.avanzar()
-		#dibujar(gota.centro,blanco,gota.onda[gota.final])
-		#borrar(gota.centro,negro,gota.onda[gota.inicio])	
 		pygame.time.delay(sincronizar)
 		pygame.display.flip()
 		pygame.display.update()
@@ -75,7 +72,7 @@ def instrucciones():
 #PRINCIPAl
 if __name__ == '__main__':
 	opciones = [
-		("Has Llover!",lluvia),		
+		("LLUVIA",lluvia),		
 		("Salir",salir),
 		]
 	pygame.init()
