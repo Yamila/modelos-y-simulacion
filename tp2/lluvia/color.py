@@ -3,7 +3,7 @@
 
 #COLORES
 negro = (0,0,0)
-blanco = (250,250,250)
+blanco = (150,150,150)
 azul = (0,40,80)
 celeste = (93,186,186)
 rojo = (186,0,0)

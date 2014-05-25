@@ -8,10 +8,10 @@ from random import *
 from gota import *
 from menu import *
 grosor = 1
-ancho = 400
-alto = 400
+ancho = 800
+alto = 500
 #tamanio de la gota
-tam = 10
+tam = 15
 def lluvia():
 	
 	def borrar(posicion,color=negro,radio = 2):
@@ -28,9 +28,9 @@ def lluvia():
 	fondo.fill(negro)
 	#Lista de GOTAS
 	gotas = []
-	sincronizar = 100
+	sincronizar = 60
 	#Cada cuantas vueltas crea otra gota
-	creador = 3
+	creador = 2
 	#Bloque principal
 	while True: 	
 		clock.tick(60)
@@ -47,7 +47,7 @@ def lluvia():
 			sincronizar = sincronizar + 10
 		if teclado[K_b]:
 			sincronizar = sincronizar - 10
-		if creador == 3:	
+		if creador == 2:	
 			gotas.append(Gota(ancho,alto,tam))
 			creador = 0
 		for i in gotas:

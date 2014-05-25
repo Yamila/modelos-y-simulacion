@@ -11,8 +11,8 @@ class Gota:
 		self.centro = [randint(1,self.ancho),randint(1,self.alto)]
 		self.inicio = 0
 		self.final = 0
-		self.distancia_entre_ondas = 10
-		self.cantidad_ondas = 3
+		self.distancia_entre_ondas = 5
+		self.cantidad_ondas = 4
 		self.muerta = False
 
 		self.tam = tam
