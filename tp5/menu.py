@@ -5,6 +5,8 @@ from pygame.locals import *
 from color import *
 #Menu para usar en cualquier juego
 #tupla = ('Nuevo juego', funcion_para_iniciar_el_juego)
+tam_fuente = 40 
+color_fuente = verde
 
 class Menu:
 	def __init__(self,opciones,pantalla,fondo,ancho,alto):
@@ -42,11 +44,11 @@ class Menu:
 		y = self.alto/4
 		for (titulo,funcion) in self.opciones:
 			if indice == self.seleccionado:
-				color = azul_seleccionado
-				self.font = pygame.font.Font(None, 63)
+				color = seleccionado
+				self.font = pygame.font.Font(None, tam_fuente+3)
 			else: 
-				color = azul
-				self.font = pygame.font.Font(None, 60)
+				color = no_seleccionado
+				self.font = pygame.font.Font(None, tam_fuente)
 			text = self.font.render(titulo, 1, color)
 			posicion = (x, y + altura_de_opcion * indice)
 			indice += 1

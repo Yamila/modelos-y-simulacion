@@ -7,43 +7,60 @@ from random import *
 from menu import *
 from actores import *
 ancho = 800
-alto = 500
+alto = 400
 
 
 def hoyo_en_uno():
-	
-	def borrar(posicion,color=verde,radio=1,grosor=1):
-		pygame.draw.circle(fondo,color,(posicion[0],posicion[1]),radio,grosor)
+	# tiene que ir en cada objeto
+	def borrar(circulo,objeto_fondo):
+		pygame.draw.circle(fondo,objeto_fondo.color,(circulo.posicion[0],circulo.posicion[1]),circulo.radio,circulo.grosor)
 		pantalla.blit(fondo,(0,0))
 	
 	def dibujar_circulo(circulo):
 		pygame.draw.circle(fondo,circulo.color,(circulo.posicion[0],circulo.posicion[1]),circulo.radio,circulo.grosor)
 		pantalla.blit(fondo,(0,0))
 
+	def dibujar_fondo():
+		pygame.draw.rect(fondo,verde_oscuro,(0,0,ancho,alto),0)
+		pantalla.blit(fondo,(0,0))
+
 	def dibujar_campo(campo):
 		pygame.draw.rect(fondo,campo.color,campo.rectangulo,campo.borde)
 		pantalla.blit(fondo,(0,0))
 
-	def dibijar_palo(palo):
+	def dibujar_palo(palo):
 		pygame.draw.line(fondo, palo.color, palo.inicio, palo.final , palo.grosor)
 		pantalla.blit(fondo,(0,0))
-		
+	
+	def borrar_palo(palo,campo):
+		pygame.draw.line(fondo, campo.color, palo.inicio, palo.final , palo.grosor)
+		pantalla.blit(fondo,(0,0))
+
+	def dibujar_limite(campo):
+		pygame.draw.line(fondo, campo.limite_color, campo.limite[0], campo.limite[1] , 2)
+		pantalla.blit(fondo,(0,0))	
+
 	clock = pygame.time.Clock()
 	fondo = pygame.display.get_surface()
 	fondo = fondo.convert() #convertir la superficie al mismo formato de píxel que la pantalla
-	fondo.fill(negro)
+	fondo.fill(rojo)
 	sincronizar = 60
+	# Creo todos los actores
 	campo = Campo(ancho,alto)
-	dibujar_campo(campo)
 	bola = Bola(ancho,alto)
-	dibujar_circulo(bola)
 	palo = Palo(bola)
-	dibijar_palo(palo)
 	hoyo = Hoyo(ancho,alto,bola)
-	dibujar_circulo(hoyo)
-
+	def dibujar_actores():
+		# Dibujo todos los objetos en la pantalla
+		dibujar_fondo()
+		dibujar_campo(campo)
+		dibujar_circulo(bola)
+		dibujar_palo(palo)
+		dibujar_circulo(hoyo)
+		dibujar_limite(campo)	
 	#Bloque principal
 	while True: 	
+		dibujar_actores()
 		clock.tick(60)
 		#Tomamos la entrada del teclado
 		teclado = pygame.key.get_pressed()
@@ -53,12 +70,41 @@ def hoyo_en_uno():
 				sys.exit()
 		if teclado[K_ESCAPE]:
 			return True
-		#Para Sincronizar
-		if teclado[K_a]:
-			sincronizar = sincronizar + 10
-		if teclado[K_b]:
-			sincronizar = sincronizar - 10		
-		
+		#Orientacion
+		if teclado[K_UP]:
+			palo.orientacion -= 10 
+		if teclado[K_DOWN]:
+			palo.orientacion += 10
+		# Velocidad
+		if teclado[K_RIGHT]:
+			palo.velocidad -= 1
+		if teclado[K_LEFT]:
+			palo.velocidad += 1
+		if teclado[K_SPACE] and bola.detenida:
+			bola.tirar(palo.orientacion,palo.velocidad)
+		# tiene que darle la orientacion que quiere
+		if bola.detenida is True:
+			borrar_palo(palo,campo)
+			palo.recalcular(bola)
+			dibujar_palo(palo)
+			dibujar_limite(campo)			
+		else:
+			# Efecto cuando golpea la pelota
+			while palo.velocidad>=0:
+				palo.velocidad -= 1
+				borrar_palo(palo,campo)
+				palo.recalcular(bola)
+				dibujar_palo(palo)
+			borrar(bola,campo)
+			dibujar_limite(campo)
+			bola.avanzar()
+			dibujar_circulo(bola)
+			hoyo.comprobar(bola)
+			
+			if bola.adentro is True:
+				print('Adentro!')
+			if bola.velocidad == 0: 
+				palo.reiniciar(bola)
 		pygame.time.delay(sincronizar)
 		pygame.display.flip()
 		pygame.display.update()
