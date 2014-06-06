@@ -57,6 +57,6 @@ class Invitado:
 	def imprimir(self,pantalla):
 		# Muestra una letra en pantalla que corresponde al invitado
 		pygame.font.init()
-		font = pygame.font.Font(None, self.sala.x_aumento)
+		font = pygame.font.Font(None, self.sala.x_aumento+5)
 		text = font.render(self.inicial, 1,blanco)
 		pantalla.blit(text, (self.posicion[0]*self.sala.x_aumento, self.posicion[1]*self.sala.y_aumento))
