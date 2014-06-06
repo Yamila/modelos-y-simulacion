@@ -48,10 +48,9 @@ class Bola:
 		if (self.rozamiento>= 10):
 			self.rozamiento = 0
 			self.velocidad -= 1
-		if self.velocidad <= 0:
+		if self.velocidad <= 1:
 			self.detenida = True
 			self.velocidad = 0
-
 
 	# Determina la velocidad de la bola y la orientacion cuando es golpeada por el palo	
 	def tirar(self,orientacion,velocidad):
@@ -77,10 +76,12 @@ class Palo:
 		d = (self.velocidad + (bola.radio+3)) * seny (self.orientacion)
 		self.inicio = [bola.posicion[0] - c + b,bola.posicion[1] + d + a]
 		self.final = [bola.posicion[0] - c - b,bola.posicion[1] + d -a ]
-		
+		self.tiros = 0
+
 	def reiniciar(self,bola):
 		self.velocidad = bola.radio +4
 		bola.a = bola.b = 1 
+		self.tiros = self.tiros + 1
 	
 	def recalcular(self,bola):
 		#Para que no salga de los limites
