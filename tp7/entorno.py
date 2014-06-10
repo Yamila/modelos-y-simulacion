@@ -6,20 +6,16 @@ from pygame.locals import *
 #Conf_inicial --> sera un archivo txt con la configuracion inicial del juego de la vida
 
 class Entorno:
-	def __init__(self, ancho, alto,filas,columnas, pantalla,conf_inicial):
+	def __init__(self, ancho, alto,pantalla,conf_inicial):
 		self.pantalla = pantalla
 		self.ancho = ancho
 		self.alto = alto
 		#mantiene la relacion del tamanio de la pantalla con los demas objetos
-		self.x_aumento = self.ancho/columnas
-		self.y_aumento = self.alto/filas
-		self.filas = filas
-		self.columnas = columnas
 		self.inicial = self.cargar_inicial(conf_inicial)
 		#teblero con el contenido
 		self.contenido = self.cargar_contenido()
-		#La proxima generacion
-		self.proximo = self.contenido
+		self.x_aumento = self.ancho/self.columnas
+		self.y_aumento = self.alto/self.filas
 		self.estados = self.cargar_estados()
 		self.fondo = pygame.Surface((ancho,alto)).convert()
 		self.dibujar_fondo()
@@ -28,7 +24,10 @@ class Entorno:
 		archivo = file(ruta, 'rt')
 		contenido = archivo.readlines()
 		archivo.close()
+		self.filas = len(contenido) 
+		self.columnas = len(contenido[0]) -1
 		return contenido
+
 
 	#determinar las posiciones de la mesa
 	def cargar_contenido(self):
@@ -62,6 +61,8 @@ class Entorno:
 		self.pantalla.blit(self.fondo,(0,0))
 		
 	def vida(self,x,y):
+		if (x<0 or y<0):
+			return False
 		try:
 			ubicacion = self.contenido[x][y]
 		except:
@@ -70,7 +71,7 @@ class Entorno:
 			return True
 		return False
 
-	def actualizar(self,x,y):
+	def aplicar_regla(self,x,y,proximo):
 		esta_viva = self.vida(x,y)
 		vecinos = 0
 		# contar los vecinos vivos que tiene
@@ -82,15 +83,14 @@ class Entorno:
 					vecinos = vecinos + 1
 		if esta_viva is True:
 			vecinos= vecinos - 1
-		print 'posicion:',x,',',y,'vecinos: ',vecinos 
 		# Reglas
 		if (esta_viva is True) and (vecinos==2 or vecinos==3):	
-			print 'regla 1'
-			self.proximo[x][y]=1
-		elif vecinos==3:
-			self.proximo[x][y]=1
+			proximo.append(1)
+		elif (esta_viva is False) and vecinos==3:
+			proximo.append(1)
 		else:
-			self.proximo[x][y]=0
+			proximo.append(0)
+		return proximo
 
-	def actualizar_tablero(self):
-		self.contenido = self.proximo
+	def actualizar_tablero(self,proximo):
+		self.contenido = proximo[:]

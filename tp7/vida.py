@@ -5,9 +5,7 @@ from pygame.locals import *
 from entorno import *
 zoom = 1
 inicial = 'inicial.txt'
-filas = 10
-columnas = 10
-cant_pulsos = 10
+cant_pulsos = 1000000
 
 #Principal
 def main():
@@ -15,7 +13,7 @@ def main():
 	alto = zoom*200 # 300
 	pantalla = pygame.display.set_mode((ancho,alto))
 	pygame.display.set_caption('Juego de la Vida')
-	entorno = Entorno(ancho,alto,filas,columnas,pantalla,inicial)
+	entorno = Entorno(ancho,alto,pantalla,inicial)
 	pulsos = 1
 	while True:
 		for e in pygame.event.get():
@@ -25,16 +23,16 @@ def main():
 		entorno.dibujar_fondo()
 		entorno.imprimir()	
 		if pulsos<=cant_pulsos:
-			print 'pulso:', pulsos
+			proximo = []
 			for f in range(entorno.filas):
+				fila = []
 				for c in range(entorno.columnas):
-					entorno.actualizar(f,c)
-					#entorno.actualizar_tablero()
-					#entorno.imprimir()
-		entorno.actualizar_tablero()
+					fila= entorno.aplicar_regla(f,c,fila)
+				proximo.append(fila)
 		pulsos= pulsos + 1			
+		entorno.actualizar_tablero(proximo)
 		pygame.display.flip()
-		pygame.time.wait(600) 
+		pygame.time.wait(160) 
 
 if __name__ == '__main__':
 	pygame.display.init()
