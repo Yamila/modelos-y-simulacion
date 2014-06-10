@@ -13,7 +13,6 @@ class Invitado:
 		self.sala = sala
 		self.nombre = nombre
 		self.inicial = inicial
-		#self.img = imagen
 		libre = False
 		#definir la posicion inicial del invitado y que no sea un lugar que no puede estar
 		while not libre:
@@ -22,7 +21,6 @@ class Invitado:
 			if self.sala.mapa[y][x] == '0':
 				libre = True
 		self.posicion = [x,y]
-		#self.satisfaccion = 10000
 		# diccionario con las distancias ideales a los demas invitados [invitado,distancia mts]
 		self.ideal = {}
 
@@ -52,7 +50,6 @@ class Invitado:
 				presuma = suma
 				self.posicion[0] = p[0]
 				self.posicion[1] = p[1]
-		#self.satisfaccion = presuma
 
 	def imprimir(self,pantalla):
 		# Muestra una letra en pantalla que corresponde al invitado

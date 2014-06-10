@@ -47,14 +47,12 @@ def main():
 	pygame.display.set_caption('Equilibrio Social')
 	sala = Sala(ancho,alto,pantalla)
 	invitados = cargar_inivitados(sala)
-	#invitados[0].avanzar(invitados)
 	while True:
 		for e in pygame.event.get():
 			if (e.type == QUIT):
 				pygame.quit()
 				sys.exit()
 		sala.imprimir()
-		#invitados[1].avanzar(invitados)
 		for i in invitados:
 			i.avanzar(invitados)
 			i.imprimir(pantalla)	
