@@ -3,9 +3,11 @@
 import pygame, sys
 from pygame.locals import *
 from entorno import *
-zoom = 1
+zoom = 2
+#Cambiar el archivo para obtener distintas configuraciones iniciales
+#'cruz.txt' 
 inicial = 'inicial.txt'
-cant_pulsos = 1000000
+cant_pulsos = 10000
 
 #Principal
 def main():
